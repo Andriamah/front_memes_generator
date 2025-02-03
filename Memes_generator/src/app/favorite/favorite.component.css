@@ -1,0 +1,27 @@
+* {
+    color: #00B2A9;
+}
+
+h1 {
+    font-size: 2rem;
+    /* Taille de la police (vous pouvez ajuster cette valeur) */
+    font-weight: bold;
+    /* Rend le texte en gras */
+    color: #00B2A9;
+    /* Couleur du texte (ajustez selon vos besoins) */
+    text-align: center;
+    /* Centre le texte horizontalement */
+    margin: 20px;
+    /* Supprime les marges par défaut */
+    padding: 20px;
+    /* Ajoute un espace autour du texte */
+    text-transform: uppercase;
+    /* Rend le texte en majuscules (optionnel) */
+    letter-spacing: 2px;
+    /* Espace entre les lettres (optionnel) */
+}
+
+.content {
+    margin: 20px;
+
+}

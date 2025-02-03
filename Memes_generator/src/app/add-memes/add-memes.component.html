@@ -1,0 +1,136 @@
+<div class="content">
+
+    <br>
+    <h1>Editeur </h1>
+    <mat-drawer-container class="example-container">
+        <mat-drawer mode="side" opened class="drawer-sidebar">
+            <div>
+                <section>
+                    <div class="example-button-row">
+                        <div class="example-flex-container">
+                            <div class="file-input-container">
+                                <input type="file" id="fileInput" (change)="uploadImage($event)" hidden>
+                                <button mat-raised-button color="primary" (click)="triggerFileInput()">Sélectionner un
+                                    fichier</button>
+                                <!-- <span class="file-name">{{ fileName }}</span> -->
+                            </div>
+
+
+                            <div class="example-button-container">
+                                <button mat-fab aria-label="Example icon button with a delete icon"
+                                    matTooltip="Sauvegarder" (click)="saveCanvas()">
+                                    <mat-icon>save</mat-icon>
+                                </button>
+                            </div>
+                            <mat-divider></mat-divider>
+                            <div class="example-button-container">
+                                <mat-menu #filterMenu="matMenu">
+                                    <button mat-menu-item (click)="applyFilter('original')">Original</button>
+                                    <button mat-menu-item (click)="applyFilter('grayscale')">Grayscale</button>
+                                    <button mat-menu-item (click)="applyFilter('sepia')">Sepia</button>
+                                    <button mat-menu-item (click)="applyFilter('invert')">Inverser</button>
+                                    <button mat-menu-item (click)="applyFilter('brightness')">Luminosité</button>
+                                </mat-menu>
+                                <button mat-fab [matMenuTriggerFor]="filterMenu" matTooltip="Filtre"
+                                    aria-label="Choisir un filtre">
+                                    <mat-icon>photo_filter</mat-icon>
+                                </button>
+
+                            </div>
+                            <mat-divider></mat-divider>
+                            <div class="example-button-container">
+                                <button mat-fab aria-label="Example icon button with a delete icon" matTooltip="Texte"
+                                    (click)="addTextStyle()">
+                                    <mat-icon>title</mat-icon>
+                                </button>
+                                <button mat-fab aria-label="Example icon button with a delete icon" matTooltip=" Forme"
+                                    (click)="addForm()">
+                                    <mat-icon>category</mat-icon>
+
+                                </button>
+                            </div>
+                            <mat-divider></mat-divider>
+
+                            <div class="example-button-container">
+                                <button mat-fab aria-label="Example icon button with a delete icon"
+                                    matTooltip="Supprimer" (click)="deleteSelectedObject()">
+                                    <mat-icon>backspace</mat-icon>
+                                </button>
+                                <button mat-fab aria-label="Example icon button with a delete icon"
+                                    matTooltip="Tout effacer" (click)="clearCanvas()">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
+                            <div class="example-button-container">
+                                <button mat-fab aria-label="Example icon button with a delete icon"
+                                    matTooltip="Effacer les textes" (click)="deleteOnlyText()">
+                                    <mat-icon> format_clear</mat-icon>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </mat-drawer>
+
+        <mat-drawer-content>
+            <div class="card-canvas-wrapper">
+                <!-- Carte d'outils -->
+                <mat-card appearance="outlined" class="card-tool" *ngIf="showCard == 'addForm'">
+                    <mat-card-content class="card-content">
+                        <!-- <button mat-fab aria-label="Apply crop" matTooltip="Appliquer le rognage" (click)="applyCrop()">
+                            <mat-icon>check</mat-icon>
+                        </button> -->
+                        <input matInput type="color" [(ngModel)]="selectedColor">
+                        <button mat-fab matTooltip="Rectangle" (click)="addRectangle()"><mat-icon>crop_3_2</mat-icon>
+                        </button>
+                        <button mat-fab matTooltip="Cercle" (click)="addCircle()"><mat-icon>panorama_fish_eye</mat-icon>
+                        </button>
+                        <button mat-fab matTooltip="Triangle"
+                            (click)="addTriangle()"><mat-icon>change_history</mat-icon>
+                        </button>
+                        <mat-icon class="rectangular-icon"></mat-icon>
+                        <mat-icon class="circular-icon"></mat-icon>
+
+                    </mat-card-content>
+                </mat-card>
+                <mat-card appearance="outlined" class="card-tool" *ngIf="showCard == 'addStyle'">
+                    <mat-card-content class="card-content">
+                        <mat-form-field appearance="fill">
+                            <mat-label for="fontSize">Taille de la police</mat-label>
+                            <input matInput id="fontSize" type="number" [(ngModel)]="fontSize">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                            <mat-label for="color">Couleur de la police</mat-label>
+                            <input matInput id="color" type="color" [(ngModel)]="color">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                            <mat-label for="fontWeight">Poids de la police</mat-label>
+                            <mat-select matNativeControl id="fontWeight" [(ngModel)]="fontWeight">
+                                <mat-option value="normal">Normal</mat-option>
+                                <mat-option value="bold">Gras</mat-option>
+                            </mat-select>
+                            <!-- <mat-select>
+                            @for (food of foods; track food) {
+                              <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
+                            }
+                          </mat-select> -->
+                        </mat-form-field>
+
+                        <button mat-raised-button color="primary" (click)="addText()">Ajouter</button>
+                    </mat-card-content>
+                </mat-card>
+
+
+                <!-- Conteneur du Canvas -->
+                <div class="canvas-container">
+                    <canvas #canvasElement></canvas>
+                </div>
+            </div>
+        </mat-drawer-content>
+
+    </mat-drawer-container>
+</div>

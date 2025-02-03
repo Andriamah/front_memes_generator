@@ -1,0 +1,51 @@
+<div class="content">
+    <section>
+        <div class="example-button-row">
+            <div class="example-flex-container">
+                <div class="example-button-container">
+                    <a mat-fab extended [routerLink]="'/home'" class="a-button">
+                        <mat-icon>home</mat-icon>
+                        Accueil
+                    </a>
+                    <a mat-fab extended [routerLink]="'/my-projects'" class="a-button">
+                        <mat-icon>perm_media</mat-icon>
+                        Mes Projets
+                    </a>
+                    <a mat-fab extended [routerLink]="'/favorite'" class="a-button">
+                        <mat-icon>favorite</mat-icon>
+                        Mes Favoris
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div class="example-button-row right-align">
+            <div class="example-flex-container">
+                <div class="example-button-container">
+                    <a mat-fab extended routerLink="/add-memes" class="a-button">
+                        <mat-icon>add_box</mat-icon>
+                        Nouveau
+                    </a>
+                    @if (isConnected) {
+                    <button mat-fab extended (click)="deconnexion()" class="a-button">
+                        <mat-icon>logout</mat-icon>
+                        Se Deconnecter
+                    </button>
+                    }@else {
+                    <button mat-fab extended (click)="openDialogLogin()" class="a-button">
+                        <mat-icon>login</mat-icon>
+                        Se Connecter
+                    </button>
+                    }
+                    <!-- <a mat-fab extended routerLink="." class="a-button"> -->
+                    <div mat-card-avatar class="example-header-image">
+
+                    </div>
+                    <!-- </a> -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</div>

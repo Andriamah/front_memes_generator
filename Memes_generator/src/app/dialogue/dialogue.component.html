@@ -1,0 +1,64 @@
+<div>
+    @if(data.typeDonnee === "login"){
+    <h2 mat-dialog-title>Authentification</h2>
+    <mat-dialog-content>
+        <mat-tab-group>
+            <mat-tab label="Connexion">
+                <form (ngSubmit)="onLogin()" [formGroup]="loginForm">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nom d'utilisateur</mat-label>
+                        <input matInput placeholder="Nom" formControlName="username" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Mot de passe</mat-label>
+                        <input matInput type="password" placeholder="Mot de passe" formControlName="password" required>
+                    </mat-form-field>
+                    <button mat-raised-button color="primary" type="submit">Se connecter</button>
+                </form>
+            </mat-tab>
+
+            <mat-tab label="Inscription">
+                <form (ngSubmit)="onRegister()" [formGroup]="registerForm">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nom d'utilisateur</mat-label>
+                        <input matInput placeholder="Nom" formControlName="nameUser" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Mot de passe</mat-label>
+                        <input matInput type="password" placeholder="Nom" formControlName="newPassword" required>
+                    </mat-form-field>
+                    <button mat-raised-button color="accent" type="submit">S'inscrire</button>
+                </form>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-dialog-content>
+    } @if(data.typeDonnee === "comments"){
+    <h2 mat-dialog-title>Commentaires</h2>
+    <mat-dialog-content class="comments-container">
+        <!-- Liste des commentaires -->
+        <div class="comment-container" *ngFor="let comment of comments">
+            <img [src]="comment.photo" alt="Profile" class="profile-pic">
+            <div class="comment-content">
+                <div class="comment-header">
+                    <strong>{{ comment.username }}</strong>
+                </div>
+                <div class="comment-text">{{ comment.text }}</div>
+                <div class="comment-date">{{ comment.date | date:'short' }}</div>
+            </div>
+        </div>
+    </mat-dialog-content>
+
+    <!-- Champ pour ajouter un commentaire -->
+    <mat-dialog-actions class="comment-input-container">
+        <mat-form-field appearance="outline" class="comment-input">
+            <mat-label>Ajouter un commentaire...</mat-label>
+            <input matInput >
+        </mat-form-field>
+        <button mat-icon-button color="primary" (click)="addComment()">
+            <mat-icon>send</mat-icon>
+        </button>
+    </mat-dialog-actions>
+
+
+    }
+</div>

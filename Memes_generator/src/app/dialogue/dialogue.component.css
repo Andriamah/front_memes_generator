@@ -1,0 +1,132 @@
+::ng-deep mat-dialog-container {
+    background: #00B2A9 !important; /* Fond légèrement clair */
+    color: #333 !important; /* Texte plus lisible */
+    border-radius: 12px;
+    padding: 5px;
+  }
+  
+  
+  /* Style du formulaire */
+  mat-form-field {
+    width: 100%;
+  }
+  
+  /* Style des onglets */
+  .mat-tab-label {
+    color: #0078B8; /* Cyan principal */
+  }
+  
+  .mat-tab-label-active {
+    color: #FF9800; /* Orange pour l'onglet actif */
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  /* Amélioration des boutons */
+  button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  button[color="primary"] {
+    background: #0078B8;
+    color: white;
+  }
+  
+  button[color="primary"]:hover {
+    background: #005f8a;
+  }
+  
+  button[color="accent"] {
+    background: #FF9800;
+    color: white;
+  }
+  
+  button[color="accent"]:hover {
+    background: #e68900;
+  }
+  
+  /* Amélioration du fond des inputs */
+  input {
+    background: white;
+    border-radius: 6px;
+    padding: 5px;
+  }
+  
+  /* Centrage des actions */
+  mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 10px;
+  }
+
+  /* Commentairee */
+ /* Conteneur des commentaires avec scroll */
+.comments-container {
+    max-height: 300px; /* Hauteur max pour l'overflow */
+    overflow-y: auto;
+    padding-right: 10px;
+  }
+  
+  /* Style de chaque commentaire */
+  .comment-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Photo de profil ronde */
+  .profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  /* Zone de texte des commentaires */
+  .comment-content {
+    flex: 1;
+    background: #f8f9fa;
+    padding: 8px 12px;
+    border-radius: 8px;
+  }
+  
+  /* Nom en bleu */
+  .comment-header {
+    font-size: 14px;
+    color: #0078B8;
+  }
+  
+  /* Texte du commentaire */
+  .comment-text {
+    font-size: 16px;
+    color: #333;
+  }
+  
+  /* Date en petit */
+  .comment-date {
+    font-size: 12px;
+    color: #888;
+    text-align: right;
+  }
+  
+  /* Conteneur du champ d'ajout de commentaire */
+  .comment-input-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px;
+  }
+  
+  /* Champ d'entrée */
+  .comment-input {
+    flex: 1;
+  }
+  

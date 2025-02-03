@@ -1,0 +1,126 @@
+canvas {
+  border: 2px solid black;
+  cursor: pointer;
+}
+
+button {
+  margin: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.example-container {
+  width: auto;
+  height: 600PX;
+  margin: 10px;
+  border: 1px solid #555;
+  /* The background property is added to clearly distinguish the borders between drawer and main
+     content */
+  background: #eee;
+}
+
+h1 {
+  font-size: 2rem;
+  /* Taille de la police (vous pouvez ajuster cette valeur) */
+  font-weight: bold;
+  /* Rend le texte en gras */
+  color: #00B2A9;
+  /* Couleur du texte (ajustez selon vos besoins) */
+  text-align: center;
+  /* Centre le texte horizontalement */
+  margin: 20px;
+  /* Supprime les marges par défaut */
+  padding: 20px;
+  /* Ajoute un espace autour du texte */
+  text-transform: uppercase;
+  /* Rend le texte en majuscules (optionnel) */
+  letter-spacing: 2px;
+  /* Espace entre les lettres (optionnel) */
+}
+
+.content {
+  margin: 20px;
+}
+
+section {
+  display: table;
+}
+
+.example-label {
+  display: table-cell;
+  font-size: 14px;
+  margin-left: 8px;
+  min-width: 120px;
+}
+
+.example-button-row {
+  display: table-cell;
+  max-width: 600px;
+}
+
+.example-button-row .mat-mdc-button-base {
+  margin: 8px 8px 8px 0;
+}
+
+.example-flex-container {
+  /* display: flex; */
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.example-button-container {
+  /* display: flex; */
+  justify-content: center;
+  width: 140px;
+}
+
+.drawer-sidebar {
+  width: 200px;
+  /* Ajustez cette valeur selon vos besoins */
+}
+
+.drawer-content {
+  padding: 20px;
+}
+
+.card-tool {
+  display: flex;
+  width: auto;
+  height: auto;
+  margin: 8px;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* Espace entre les éléments */
+}
+
+.card-content>div {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.canvas-container {
+  flex: 1;
+  /* Le canvas prendra tout l'espace restant */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  position: fixed;
+  top: 50%; /* Centre verticalement */
+  left: 50%; /* Centre horizontalement */
+  transform: translate(-50%, -50%); /* Centre vraiment au milieu */
+  border: 5px solid #031a19; /* Bordure optionnelle */
+
+}
+
+.card-canvas-wrapper {
+  display: flex;
+  gap: 20px;
+  /* Espacement entre la carte et le canvas */
+  align-items: center;
+}

@@ -1,0 +1,20 @@
+.snackbar-container {
+    display: flex;
+    align-items: center;
+    padding: 50px;
+    border: none;
+    /* Enlever la bordure */
+    box-shadow: none;
+    /* Enlever l'ombre */
+    outline: none;
+    /* Enlever le cadre de focus */
+    border-radius: 4px;
+    /* Garder le rayon des coins */
+    font-size: 14px;
+    color: white;
+    background-color: transparent;
+    /* Fond transparent */
+    margin: -20px;
+    font-size: large;
+  
+  }
