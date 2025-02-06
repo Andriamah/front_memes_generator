@@ -21,3 +21,4 @@ Ensuite, lancez ces commandes suivantes :
 Puisqu'elle n'est pas encore déployée en ligne, ces étapes sont utiles pour la lancer localement.
 
 *Bon visionnage !*
+*By Elodie ANDRIAMAHANINTSOA*
