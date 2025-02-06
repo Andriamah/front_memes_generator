@@ -1,43 +1,44 @@
 <div class="content">
-    <mat-card class="example-card" appearance="outlined">
-        <mat-card-header>
-            <div mat-card-avatar class="example-header-image"></div>
-            <mat-card-title>Auteur</mat-card-title>
-            <mat-card-subtitle>Date creation</mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-            alt="Photo of a Shiba Inu">
-        <mat-card-content>
-            <p>
-                Nom du memes
-            </p>
-        </mat-card-content>
-        <mat-card-actions>
-            <mat-icon class="action">favorite_border</mat-icon>5
-            <mat-icon class="action"> insert_comment</mat-icon>4
-            <mat-icon class="action">file_download</mat-icon>
-        </mat-card-actions>
-    </mat-card>
-    <mat-card class="example-card" appearance="outlined">
-        <mat-card-header>
-            <div mat-card-avatar class="example-header-image"></div>
-            <mat-card-title>Auteur</mat-card-title>
-            <mat-card-subtitle>Date creation</mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-            alt="Photo of a Shiba Inu">
-        <mat-card-content>
-            <p>Nom du memes</p>
-        </mat-card-content>
-        <mat-card-actions >
-            <mat-icon class="action">favorite</mat-icon>1
-            <mat-icon class="action" (click)="openDialogComment('1')"> insert_comment</mat-icon>3
-            <mat-icon class="action">file_download</mat-icon>
-        </mat-card-actions>
-    </mat-card>
+    @for (meme of memes; track meme){
+        <mat-card class="example-card" appearance="outlined">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>{{ meme.User?.username ?? 'Default Username' }}</mat-card-title>
+                <mat-card-subtitle>{{ meme.createdAt | date:'short' }}</mat-card-subtitle>
+            </mat-card-header>
+
+            <!-- Image dans le card -->
+            @if (imageList[meme.id ?? 0]) {
+                <img mat-card-image [src]="imageList[meme.id ?? 0]" alt="Meme Image" class="clickable-image" (click)="zoomImage(imageList[meme.id ?? 0])">
+            } @else {
+                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Image par défaut">
+            }
+
+            <mat-card-content>
+                <p>{{ meme.title }}</p>
+            </mat-card-content>
+
+            <mat-card-actions>
+                @if(likedStatus[meme.id ?? 0]) {
+                    <mat-icon class="action" (click)="unfavorite(meme.id)">favorite</mat-icon>{{ meme.favoriteCount }}
+                } @else {
+                    <mat-icon class="action" (click)="onfavorite(meme.id ?? '')">favorite_border</mat-icon>{{ meme.favoriteCount }}
+                }
+                <mat-icon class="action" (click)="openDialogComment(meme.id ?? '')">insert_comment</mat-icon>{{ meme.commentCount }}
+                <mat-icon class="action" (click)="downloadImage(meme.id ?? 0)">file_download</mat-icon>
+                <button mat-icon-button (click)="shareToSocial('facebook')"><mat-icon>facebook</mat-icon></button>
+                <button mat-icon-button (click)="shareToSocial('whatsapp')"><mat-icon>whatsapp</mat-icon></button>
+            </mat-card-actions>
+        </mat-card>
+    }
 </div>
+
+<!-- Overlay pour zoom -->
+<div *ngIf="isImageZoomed" class="image-overlay" (click)="closeZoom()">
+    <img [src]="zoomedImageUrl" alt="Zoomed Meme" class="zoomed-image" />
+</div>
+
 <br>
 <br>
 <br>
-<br>
-<br>
+

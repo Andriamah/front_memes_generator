@@ -1,7 +1,7 @@
 <div class="content">
 
     <br>
-    <h1>Editeur </h1>
+    <h1>Atelier </h1>
     <mat-drawer-container class="example-container">
         <mat-drawer mode="side" opened class="drawer-sidebar">
             <div>
@@ -17,10 +17,18 @@
 
 
                             <div class="example-button-container">
-                                <button mat-fab aria-label="Example icon button with a delete icon"
-                                    matTooltip="Sauvegarder" (click)="saveCanvas()">
-                                    <mat-icon>save</mat-icon>
-                                </button>
+                                <form (ngSubmit)="saveCanvas()" [formGroup]="canvasForm">
+
+                                    <!-- <input matInput placeholder="Nom du fichier" formControlName="name"> -->
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Nom du fichier</mat-label>
+                                        <input matInput placeholder="Nom du fichier" formControlName="name">
+                                    </mat-form-field>
+                                    <button mat-fab aria-label="Example icon button with a delete icon"
+                                        matTooltip="Sauvegarder">
+                                        <mat-icon>save</mat-icon>
+                                    </button>
+                                </form>
                             </div>
                             <mat-divider></mat-divider>
                             <div class="example-button-container">
@@ -76,13 +84,21 @@
 
         <mat-drawer-content>
             <div class="card-canvas-wrapper">
-                <!-- Carte d'outils -->
                 <mat-card appearance="outlined" class="card-tool" *ngIf="showCard == 'addForm'">
+                    <mat-card-header>
+                        <button mat-icon-button (click)="closeCard()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-card-header>
                     <mat-card-content class="card-content">
-                        <!-- <button mat-fab aria-label="Apply crop" matTooltip="Appliquer le rognage" (click)="applyCrop()">
-                            <mat-icon>check</mat-icon>
-                        </button> -->
-                        <input matInput type="color" [(ngModel)]="selectedColor">
+                        <mat-form-field appearance="fill">
+                            <mat-label for="color">Bordure</mat-label>
+                            <input matInput id="color" type="color" [(ngModel)]="selectedColor">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label for="Rcolor">Remplissage</mat-label>
+                            <input matInput id="Rcolor" type="color" [(ngModel)]="fillColor">
+                        </mat-form-field>
                         <button mat-fab matTooltip="Rectangle" (click)="addRectangle()"><mat-icon>crop_3_2</mat-icon>
                         </button>
                         <button mat-fab matTooltip="Cercle" (click)="addCircle()"><mat-icon>panorama_fish_eye</mat-icon>
@@ -96,6 +112,11 @@
                     </mat-card-content>
                 </mat-card>
                 <mat-card appearance="outlined" class="card-tool" *ngIf="showCard == 'addStyle'">
+                    <mat-card-header>
+                        <button mat-icon-button (click)="closeCard()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-card-header>
                     <mat-card-content class="card-content">
                         <mat-form-field appearance="fill">
                             <mat-label for="fontSize">Taille de la police</mat-label>
@@ -108,16 +129,16 @@
                         </mat-form-field>
 
                         <mat-form-field appearance="fill">
+                            <mat-label for="color">Couleur de fond</mat-label>
+                            <input matInput id="color" type="color" [(ngModel)]="color">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
                             <mat-label for="fontWeight">Poids de la police</mat-label>
                             <mat-select matNativeControl id="fontWeight" [(ngModel)]="fontWeight">
                                 <mat-option value="normal">Normal</mat-option>
                                 <mat-option value="bold">Gras</mat-option>
                             </mat-select>
-                            <!-- <mat-select>
-                            @for (food of foods; track food) {
-                              <mat-option [value]="food.value">{{food.viewValue}}</mat-option>
-                            }
-                          </mat-select> -->
                         </mat-form-field>
 
                         <button mat-raised-button color="primary" (click)="addText()">Ajouter</button>

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 
 
 import { DialogueComponent } from '../dialogue/dialogue.component';
+import { SnackbarService } from '../services/snackbar.service';
 
 
 @Component({
@@ -23,13 +24,18 @@ import { DialogueComponent } from '../dialogue/dialogue.component';
 })
 export class HeaderComponent implements OnInit {
   constructor(
-    private router: Router,) { }
+    private router: Router,
+    private snackBar_service: SnackbarService) { }
   data = {
     typeDonnee: 'contenu',
     id: 0
   };
   readonly dialog = inject(MatDialog);
   isConnected = true;
+  token = localStorage.getItem('token');
+
+
+
   ngOnInit(): void {
     this.checkToken()
   }
@@ -43,18 +49,33 @@ export class HeaderComponent implements OnInit {
       console.log(`Dialog result: ${result}`);
     });
   }
+
+  openDialogProfil() {
+    if (this.token) {
+      this.data.typeDonnee = "profil";
+      console.log('appel profil dialogue');
+      const dialogRef = this.dialog.open(DialogueComponent, {
+        data: this.data
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+    }else{
+      this.openDialogLogin()
+    }
+
+  }
   checkToken() {
-    const token = localStorage.getItem('access_token');
-    this.isConnected = !!token; // will be true if token exists, false otherwise
+    this.isConnected = !!this.token; // will be true if token exists, false otherwise
 
   }
 
   deconnexion() {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    // this.snackbarService.open("Déconnexion réussie. À bientôt !",'info');
-
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    this.snackBar_service.open("Déconnexion réussie. À bientôt !", 'default');
     this.isConnected = false;
-    this.router.navigate(['/accueil']);
+    window.location.reload();
+
   }
 }

@@ -1,11 +1,15 @@
-.example-card {
-    max-width: 300px;
-    margin: 5px;
-}
-
 .content {
     display: flex;
     margin-bottom: 100px;
+    flex-wrap: wrap;          /* Permet le passage à la ligne */
+    gap: 20px;               /* Espace entre les cards */
+    justify-content: center;  /* Centre les cards horizontalement */
+}
+
+.example-card {
+    flex: 0 1 300px;         /* Fixe la largeur mais permet la flexibilité */
+    max-width: 300px;
+    margin: 5px;
 }
 
 .example-header-image {
@@ -30,3 +34,42 @@
     box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
     transform: scale(1.05);
 }
+
+
+/* Style de la galerie */
+/* Style de l'image dans le card */
+.clickable-image {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    width: 100%;
+    height: auto;
+  }
+  
+  /* Zoom au clic sur l'image */
+  .clickable-image:active {
+    transform: scale(1.05); /* Effet de zoom léger */
+  }
+  
+  /* Overlay pour afficher l'image en grand */
+  .image-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    cursor: pointer;
+  }
+  
+  /* Image zoomée */
+  .zoomed-image {
+    max-width: 150%;
+    max-height: 150%;
+    object-fit: contain;
+  }
+  
+  

@@ -28,7 +28,7 @@ h1 {
   /* Couleur du texte (ajustez selon vos besoins) */
   text-align: center;
   /* Centre le texte horizontalement */
-  margin: 20px;
+  margin: 10px;
   /* Supprime les marges par défaut */
   padding: 20px;
   /* Ajoute un espace autour du texte */
@@ -123,4 +123,14 @@ section {
   gap: 20px;
   /* Espacement entre la carte et le canvas */
   align-items: center;
+}
+
+.example-full-width {
+  width: 120%;
+  margin: 8px;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: flex-end;
 }

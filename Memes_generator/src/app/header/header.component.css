@@ -52,10 +52,31 @@ section {
     height: 55px;
     border-radius: 40%;
     /* Pour un effet arrondi */
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-image: url('../../assets/images/avatar.png');
     background-size: cover;
     background-position: center;
     display: inline-block;
-    border: 2px solid #000;
+    border: 2px solid #126e63;
 
+}
+
+.example-logo{
+    width: 55px;
+    /* Ajustez selon la taille souhaitée */
+    height: 55px;
+    border-radius: 40%;
+    /* Pour un effet arrondi */
+    background-image: url('../../assets/images/logo.jpg');
+    background-size: cover;
+    background-position: center;
+    display: inline-block;
+    border: 2px solid #126e63;
+}
+
+
+
+
+.example-logo:hover {
+    transform: scale(1.1);
+    /* L'image grandit légèrement au survol */
 }

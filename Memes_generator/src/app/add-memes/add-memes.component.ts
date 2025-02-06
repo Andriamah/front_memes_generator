@@ -11,7 +11,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MemesService } from '../services/memes.service';
+import { Memes } from '../models/Memes';
+import { SnackbarService } from '../services/snackbar.service';
 
 
 @Component({
@@ -19,6 +22,7 @@ import { FormsModule } from '@angular/forms';
   imports: [MatSidenavModule,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     MatIconModule,
     MatButtonModule,
     MatDividerModule,
@@ -36,17 +40,36 @@ export class AddMemesComponent implements AfterViewInit {
   @ViewChild('canvasElement', { static: false }) canvasElement!: ElementRef;
   canvas!: fabric.Canvas;
   selectedColor: string = '#000000';
+  fillColor: string = '';
   showCard = '';
-  fontSize: number = 20;  // Taille de la police par défaut
-  color: string = '#000000';  // Couleur de la police par défaut
-  fontWeight: string = 'normal';  // Poids de la police par défaut
+  fontSize: number = 20;
+  color: string = '#000000';
+  fontWeight: string = 'normal';
+  backgroundColor = null;
+  canvasForm!: FormGroup;
+  new_memes = new Memes();
+
+
+  constructor(
+    private fb: FormBuilder,
+    private memes_service: MemesService,
+    private snackBar_service: SnackbarService
+
+  ) {
+    this.canvasForm = this.fb.group({
+      name: ['', Validators.required]
+    });
+  }
+
 
   ngAfterViewInit(): void {
+
     this.canvas = new fabric.Canvas(this.canvasElement.nativeElement, {
       width: 600,
       height: 400,
       backgroundColor: '#fff'
     });
+
   }
 
   triggerFileInput() {
@@ -101,35 +124,72 @@ export class AddMemesComponent implements AfterViewInit {
       fontSize: this.fontSize,
       fontWeight: this.fontWeight,
       fill: this.color,
-      backgroundColor: 'white',
+      backgroundColor: this.backgroundColor ?? undefined,
       width: 200
     });
     this.canvas.add(text);
     this.canvas.renderAll();
   }
 
-  changeTextStyle(fontSize: number, color: string, fontWeight: string) {
+  changeTextStyle(fontSize: number, color: string, fontWeight: string, backgroundColor?: string) {
     const activeObject = this.canvas.getActiveObject();
     if (activeObject && activeObject instanceof fabric.Textbox) {
       activeObject.set({
         fontSize: fontSize,
         fill: color,
-        fontWeight: fontWeight
+        fontWeight: fontWeight,
+        backgroundColor: backgroundColor ?? undefined, // Use nullish coalescing
       });
       this.canvas.renderAll();
     }
   }
 
   saveCanvas() {
-    const dataURL = this.canvas.toDataURL({
-      format: 'png',
-      multiplier: 1
-    });
+    const memeData = this.canvasForm.value;
 
-    const link = document.createElement('a');
-    link.href = dataURL;
-    link.download = 'image_edited.png';
-    link.click();
+    // this.new_memes.title = memeData.name;
+    console.log('ICIC ARY OOO ' + memeData.name)
+    if (this.canvasForm.valid) {
+      // const dataURL = this.canvas.toDataURL({
+      //   format: 'png',
+      //   multiplier: 1,
+
+      // });
+
+      // const link = document.createElement('a');
+      // link.href = dataURL;
+      // link.download = 'image_edited.png';
+      // link.click();
+
+
+      const dataURL = this.canvas.toDataURL({
+        format: 'jpeg',
+        quality: 0.7,
+        multiplier: 0.5
+      });
+      const memeData = this.canvasForm.value;
+
+      this.new_memes.title = memeData.name;
+
+      // Création de l'objet à envoyer au serveur
+      const fabricData = {
+        memes: this.new_memes,
+        fabricData: dataURL // L'image est déjà en base64
+      };
+
+      this.memes_service.addMemes(fabricData).subscribe(response => {
+        console.log('Meme enregistré avec succès !', response);
+        this.snackBar_service.open("Meme enregistré avec succès !", "default")
+      }, error => {
+        this.snackBar_service.open("Erreur lors de la sauvegarde du memes", "default")
+
+        console.error('', error)
+      });
+    } else {
+      this.snackBar_service.open("Veuillez nommer votre fichier.", "default")
+
+    }
+
   }
 
   applyFilter(filterType: string) {
@@ -163,11 +223,9 @@ export class AddMemesComponent implements AfterViewInit {
             return;
         }
 
-        // Ajouter le filtre au tableau des filtres
         activeObject.filters = [filter];
       }
 
-      // Appliquer et mettre à jour l'affichage
       activeObject.applyFilters();
       this.canvas.requestRenderAll();
     } else {
@@ -183,8 +241,8 @@ export class AddMemesComponent implements AfterViewInit {
     const rectangle = new fabric.Rect({
       left: 50,
       top: 50,
-      fill: null,  // Pas de remplissage
-      stroke: this.selectedColor,  // Couleur sélectionnée
+      fill: this.fillColor,
+      stroke: this.selectedColor,
       width: 100,
       height: 50,
       angle: 0,
@@ -193,11 +251,12 @@ export class AddMemesComponent implements AfterViewInit {
   }
 
   addCircle() {
+    console.log('this is the color ' + this.fillColor)
     const circle = new fabric.Circle({
       left: 150,
       top: 150,
-      fill: null,  // Pas de remplissage
-      stroke: this.selectedColor,  // Couleur sélectionnée
+      fill: this.fillColor,
+      stroke: this.selectedColor,
       radius: 50,
     });
     this.canvas.add(circle);
@@ -213,8 +272,8 @@ export class AddMemesComponent implements AfterViewInit {
       {
         left: 200,
         top: 200,
-        fill: null,  // Pas de remplissage
-        stroke: this.selectedColor,  // Couleur sélectionnée
+        fill: this.fillColor,
+        stroke: this.selectedColor,
         angle: 0,
       }
     );
@@ -244,17 +303,9 @@ export class AddMemesComponent implements AfterViewInit {
     this.canvas.renderAll();
   }
 
-  openSnackBar() {
-    // this._snackBar.openFromComponent(SnackbarComponent, {
-    //   duration: this.durationInSeconds * 1000,
-    // });
-
-    // this._snackBar.openFromComponent(SnackbarComponent,  {
-    //   duration: this.durationInSeconds * 1000,
-
-    //   horizontalPosition: this.horizontalPosition,
-    //   verticalPosition: this.verticalPosition,
-    // });
+  closeCard(){
+    this.showCard='';
   }
+
 
 }
